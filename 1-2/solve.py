@@ -1,29 +1,14 @@
 with open("./input", mode="r") as f:
     lines = f.readlines()
 
-values = list(map(int, lines))
-a, b, c, d = 0, 0, 0, 0
+values = map(int, lines)
+a = float("inf")
+b = float("inf")
+c = float("inf")
+d = float("inf")
 count = 0
 
-for i, val in enumerate(values[:4]):
-    match i % 4:
-        case 0:
-            a = val
-        case 1:
-            a += val
-            b += val
-        case 2:
-            a += val
-            b += val
-            c = val
-        case 3:
-            b += val
-            c += val
-            d = val
-            if b > a:
-                count += 1
-
-for i, val in enumerate(values[4:]):
+for i, val in enumerate(values):
     match i % 4:
         case 0:
             a = val
@@ -31,7 +16,6 @@ for i, val in enumerate(values[4:]):
             d += val
             if c > b:
                 count += 1
-                print(b, c)
         case 1:
             a += val
             b = val
