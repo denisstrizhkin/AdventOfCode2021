@@ -66,14 +66,23 @@ while lines:
     boards.append(Board(nums))
 
 
-def find_winner(boards):
-    for code in codes:
-        for board in boards:
-            board.check_hits(code)
-            if board.is_winner:
-                return (board, code)
+def check_boards(boards, code):
+    left = boards.copy()
+    winners = list()
+    for board in boards:
+        board.check_hits(code)
+        if board.is_winner:
+            left.remove(board)
+            winners.append((board, code))
+    return (winners, left)
 
 
-winner, code = find_winner(boards)
+left = boards.copy()
+winners = []
+for code in codes:
+    won, left = check_boards(left, code)
+    winners += won
+
+(winner, code) = winners[-1]
 with open("./answer", mode="w") as f:
     f.write(f"{winner.score * code}\n")
